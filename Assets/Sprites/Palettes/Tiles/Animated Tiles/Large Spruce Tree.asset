@@ -12,9 +12,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
   m_Name: Large Spruce Tree
   m_EditorClassIdentifier: 
-  m_AnimatedSprites: []
-  m_MinSpeed: 1
-  m_MaxSpeed: 1
+  m_AnimatedSprites:
+  - {fileID: -176623903, guid: d7adc1ed6ec75a441b13971e30346816, type: 3}
+  - {fileID: 322402455, guid: d7adc1ed6ec75a441b13971e30346816, type: 3}
+  - {fileID: 915514425, guid: d7adc1ed6ec75a441b13971e30346816, type: 3}
+  - {fileID: -1976171274, guid: d7adc1ed6ec75a441b13971e30346816, type: 3}
+  - {fileID: 1831125634, guid: d7adc1ed6ec75a441b13971e30346816, type: 3}
+  - {fileID: -1445463973, guid: d7adc1ed6ec75a441b13971e30346816, type: 3}
+  - {fileID: -952333575, guid: d7adc1ed6ec75a441b13971e30346816, type: 3}
+  - {fileID: -290633442, guid: d7adc1ed6ec75a441b13971e30346816, type: 3}
+  - {fileID: -386032131, guid: d7adc1ed6ec75a441b13971e30346816, type: 3}
+  - {fileID: 1022148552, guid: d7adc1ed6ec75a441b13971e30346816, type: 3}
+  - {fileID: 891174905, guid: d7adc1ed6ec75a441b13971e30346816, type: 3}
+  - {fileID: -1824944577, guid: d7adc1ed6ec75a441b13971e30346816, type: 3}
+  - {fileID: 1079706980, guid: d7adc1ed6ec75a441b13971e30346816, type: 3}
+  - {fileID: -840199279, guid: d7adc1ed6ec75a441b13971e30346816, type: 3}
+  - {fileID: 427355157, guid: d7adc1ed6ec75a441b13971e30346816, type: 3}
+  - {fileID: -771455348, guid: d7adc1ed6ec75a441b13971e30346816, type: 3}
+  - {fileID: 1639971744, guid: d7adc1ed6ec75a441b13971e30346816, type: 3}
+  - {fileID: -1747528842, guid: d7adc1ed6ec75a441b13971e30346816, type: 3}
+  - {fileID: -869785026, guid: d7adc1ed6ec75a441b13971e30346816, type: 3}
+  - {fileID: -1727179013, guid: d7adc1ed6ec75a441b13971e30346816, type: 3}
+  - {fileID: 1396522948, guid: d7adc1ed6ec75a441b13971e30346816, type: 3}
+  - {fileID: 658591302, guid: d7adc1ed6ec75a441b13971e30346816, type: 3}
+  - {fileID: -899145160, guid: d7adc1ed6ec75a441b13971e30346816, type: 3}
+  - {fileID: -6585768, guid: d7adc1ed6ec75a441b13971e30346816, type: 3}
+  - {fileID: 96989679, guid: d7adc1ed6ec75a441b13971e30346816, type: 3}
+  m_MinSpeed: 30
+  m_MaxSpeed: 30
   m_AnimationStartTime: 0
   m_AnimationStartFrame: 0
   m_TileColliderType: 0
