@@ -17,14 +17,18 @@ public class Player : MonoBehaviour
     [SerializeField]
     SpriteRenderer _spriteRenderer;
 
+    [SerializeField] bool _isJumping = false;
+
     [SerializeField] LayerMask _groundedMask;
 
     private bool IsGrounded()
     {
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, GROUNDED_RAY_LENGTH, 
             _groundedMask);
+
+        bool isGrounded = (hit.collider != null);
         
-        return (hit.collider != null);
+        return isGrounded;
     }
 
     private void OnDrawGizmos()
@@ -50,18 +54,33 @@ public class Player : MonoBehaviour
         }
     }
 
+    private WaitForSeconds waitForJumpDelay = new WaitForSeconds(0.1f);
+
+    private IEnumerator SetJumping()
+    {
+        // We want a brief delay so that we don't register as jumping until we're actually off the ground
+        yield return waitForJumpDelay;
+        _isJumping = true;
+    }
+
     private void Update()
     {
         // Detect jump
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log("Jumping?");
             if (IsGrounded())
             {
-                Debug.Log("Grounded");
+                _playerAnimation.SetJumping(true);
+                StartCoroutine(SetJumping());
                 _rb.velocity = new Vector2(_rb.velocity.x, _jumpVelocity);
             }
-        } 
+        }
+
+        if (_isJumping && IsGrounded())
+        {
+            _isJumping = false;
+            _playerAnimation.SetJumping(false);
+        }
     }
 
     // Update is called once per frame

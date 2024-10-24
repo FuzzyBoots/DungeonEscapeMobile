@@ -17,4 +17,9 @@ public class PlayerAnimation : MonoBehaviour
     public void SetMoveSpeed(float speed) {
         _animator.SetFloat("Movement Speed", speed);
     }
+
+    public void SetJumping(bool jumping)
+    {
+        _animator.SetBool("Jumping", jumping);
+    }
 }
