@@ -65,10 +65,11 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        bool isGrounded = IsGrounded();
         // Detect jump
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (IsGrounded())
+            if (isGrounded)
             {
                 _playerAnimation.SetJumping(true);
                 StartCoroutine(SetJumping());
@@ -76,10 +77,15 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (_isJumping && IsGrounded())
+        if (_isJumping && isGrounded)
         {
             _isJumping = false;
             _playerAnimation.SetJumping(false);
+        }
+
+        if (Input.GetMouseButtonDown(0) && isGrounded)
+        {
+            _playerAnimation.SetAttack();
         }
     }
 
