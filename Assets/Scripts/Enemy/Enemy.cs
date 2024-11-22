@@ -80,11 +80,8 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void PlayHit()
     {
-        if (collision.CompareTag("Sword"))
-        {
-            _animator.SetTrigger("Hit");
-        }
+        _animator.SetTrigger("Hit");
     }
 }

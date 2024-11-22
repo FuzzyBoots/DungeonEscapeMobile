@@ -86,7 +86,7 @@ public class Player : MonoBehaviour
             _playerAnimation.SetJumping(false);
         }
 
-        if (Input.GetMouseButtonDown(0) && isGrounded)
+        if (Input.GetMouseButtonDown(0) && isGrounded && !_isAttacking)
         {
             _isAttacking = true;
             _playerAnimation.SetAttack();
