@@ -9,7 +9,7 @@ public class Attack : MonoBehaviour
         Debug.Log($"Hit {collision.gameObject.name}");
         if (collision.gameObject.TryGetComponent<IDamageable>(out IDamageable damageable))
         {
-            damageable.Damage(1f);
+            damageable.Damage(1);
         }
     }
 }

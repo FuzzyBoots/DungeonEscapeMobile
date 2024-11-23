@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Spider : Enemy, IDamageable
 {
-    public float health { get; set; }
+    public int Health { get; set; }
 
-    public void Damage(float damage)
+    public void Damage(int damage)
     {
         PlayHit();
     }

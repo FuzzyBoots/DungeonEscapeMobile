@@ -15,6 +15,8 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] float _wayPointThreshold = 0.05f;
 
+    bool _isDead = false;
+
     private void Start()
     {
         if (_animator == null)
@@ -39,7 +41,10 @@ public class Enemy : MonoBehaviour
 
     protected void HandleUpdate()
     {
-        HandleMovement();
+        if (!_isDead)
+        {
+            HandleMovement();
+        }
     }
 
     protected void HandleMovement()
@@ -83,5 +88,11 @@ public class Enemy : MonoBehaviour
     public void PlayHit()
     {
         _animator.SetTrigger("Hit");
+    }
+
+    public void PlayDeath()
+    {
+        _animator.SetTrigger("Death");
+        _isDead = true;
     }
 }

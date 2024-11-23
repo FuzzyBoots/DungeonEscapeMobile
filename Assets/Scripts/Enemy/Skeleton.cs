@@ -7,20 +7,25 @@ public class Skeleton : Enemy, IDamageable
     WaitForSeconds _mercyInvincibilityTime = new WaitForSeconds(0.5f);
     private bool _isDamageable = true;
 
-    public float health { get; set; }
-
+    public int Health { get { return _health; } set { _health = value; } }
+    
     public IEnumerator DamageCooldown()
     {
         yield return _mercyInvincibilityTime;
         _isDamageable = true;
     }
-    public void Damage(float damage)
+
+    public void Damage(int damage)
     {
-        Debug.Log("Skeleton taking damage");
-        if (_isDamageable)
+        if (_isDamageable && Health > 0)
         {
-            health -= damage;
+            Debug.Log($"Skeleton taking damage {damage} - curHealth: {Health}");
             PlayHit();
+            Health -= damage;
+            
+            if (Health <= 0) {
+                PlayDeath();
+            }
 
             StartCoroutine(DamageCooldown());
         }

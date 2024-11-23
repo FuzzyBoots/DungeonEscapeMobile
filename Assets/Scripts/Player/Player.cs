@@ -57,8 +57,7 @@ public class Player : MonoBehaviour
     }
 
     private WaitForSeconds waitForJumpDelay = new WaitForSeconds(0.1f);
-    private bool _isAttacking;
-
+    
     private IEnumerator SetJumping()
     {
         // We want a brief delay so that we don't register as jumping until we're actually off the ground
@@ -86,9 +85,8 @@ public class Player : MonoBehaviour
             _playerAnimation.SetJumping(false);
         }
 
-        if (Input.GetMouseButtonDown(0) && isGrounded && !_isAttacking)
+        if (Input.GetMouseButtonDown(0) && isGrounded)
         {
-            _isAttacking = true;
             _playerAnimation.SetAttack();
         }
     }

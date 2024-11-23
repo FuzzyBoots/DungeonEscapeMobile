@@ -2,7 +2,7 @@
 
 public interface IDamageable
 {
-    float health { get; set; }
+    int Health { get; set; }
     
-    void Damage(float damage);
+    void Damage(int damage);
 }
