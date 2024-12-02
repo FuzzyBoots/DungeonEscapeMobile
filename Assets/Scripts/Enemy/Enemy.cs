@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -14,6 +15,9 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected bool _travelPointForward;
 
     [SerializeField] float _wayPointThreshold = 0.05f;
+    [SerializeField] protected float _sightDistance = 2f;
+
+    protected Player _player;
 
     bool _isDead = false;
 
@@ -27,6 +31,8 @@ public class Enemy : MonoBehaviour
         {
             Debug.LogError("Animator could not be determined.", this);
         }
+
+        _player = GameObject.Find("Player")?.GetComponent<Player>();
     }
 
     public void Attack()
@@ -39,7 +45,7 @@ public class Enemy : MonoBehaviour
         HandleUpdate();
     }
 
-    protected void HandleUpdate()
+    protected virtual void HandleUpdate()
     {
         if (!_isDead)
         {
@@ -51,7 +57,7 @@ public class Enemy : MonoBehaviour
     {
         AnimatorStateInfo curState = _animator.GetCurrentAnimatorStateInfo(0);
 
-        if (curState.IsName("Idle"))
+        if (curState.IsName("Idle") || curState.IsName("Hit") || curState.IsName("Death"))
         {
             return;
         }
@@ -94,5 +100,10 @@ public class Enemy : MonoBehaviour
     {
         _animator.SetTrigger("Death");
         _isDead = true;
+    }
+
+    public void SetCombatMode(bool inCombatMode)
+    {
+        _animator.SetBool("Combat Mode", inCombatMode);
     }
 }
