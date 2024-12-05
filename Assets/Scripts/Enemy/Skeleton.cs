@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Timeline;
 using UnityEngine;
 
 public class Skeleton : Enemy, IDamageable
@@ -21,7 +22,7 @@ public class Skeleton : Enemy, IDamageable
         if (_isDamageable && Health > 0)
         {
             PlayHit();
-            SetCombatMode(true);
+            CombatMode = true;
             Health -= damage;
             
             if (Health <= 0) {
@@ -36,9 +37,23 @@ public class Skeleton : Enemy, IDamageable
     {
         base.HandleUpdate();
 
+        // Find direction to player
+        Vector3 direction = _player.transform.position - transform.position;
+
         if (Vector3.Distance(transform.localPosition, _player.gameObject.transform.localPosition) > _sightDistance)
         {
-            SetCombatMode(false);
+            CombatMode = false;
+        }
+
+        if (CombatMode)
+        {
+            if (direction.x > 0)
+            {
+                FlipSprite(false);
+            } else if (direction.x < 0)
+            {
+                FlipSprite(true);
+            }
         }
     }
 }

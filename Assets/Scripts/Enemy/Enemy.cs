@@ -19,6 +19,11 @@ public class Enemy : MonoBehaviour
 
     protected Player _player;
 
+    public bool CombatMode { 
+        get { return _animator ? _animator.GetBool("Combat Mode") : false; } 
+        set { _animator?.SetBool("Combat Mode", value);  } 
+    }
+
     bool _isDead = false;
 
     private void Start()
@@ -57,7 +62,7 @@ public class Enemy : MonoBehaviour
     {
         AnimatorStateInfo curState = _animator.GetCurrentAnimatorStateInfo(0);
 
-        if (curState.IsName("Idle") || curState.IsName("Hit") || curState.IsName("Death"))
+        if (!curState.IsName("Walk"))
         {
             return;
         }
@@ -65,13 +70,11 @@ public class Enemy : MonoBehaviour
         Vector3 nextPos = _travelPoints[_travelPointIndex].position;
         if (nextPos.x < transform.position.x)
         {
-            Vector3 curScale = transform.localScale;
-            transform.localScale = new Vector3(-Mathf.Abs(curScale.x), curScale.y, curScale.z);
+            FlipSprite(true);
         }
         else if (nextPos.x > transform.position.x)
         {
-            Vector3 curScale = transform.localScale;
-            transform.localScale = new Vector3(Mathf.Abs(curScale.x), curScale.y, curScale.z);
+            FlipSprite(false);
         }
 
         transform.position = Vector3.MoveTowards(transform.position, nextPos, _speed * Time.deltaTime);
@@ -91,6 +94,12 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    protected void FlipSprite(bool flip)
+    {
+        Vector3 curScale = transform.localScale;
+        transform.localScale = new Vector3((flip ? -1 : 1) * Mathf.Abs(curScale.x), curScale.y, curScale.z);
+    }
+
     public void PlayHit()
     {
         _animator.SetTrigger("Hit");
@@ -100,10 +109,5 @@ public class Enemy : MonoBehaviour
     {
         _animator.SetTrigger("Death");
         _isDead = true;
-    }
-
-    public void SetCombatMode(bool inCombatMode)
-    {
-        _animator.SetBool("Combat Mode", inCombatMode);
     }
 }
