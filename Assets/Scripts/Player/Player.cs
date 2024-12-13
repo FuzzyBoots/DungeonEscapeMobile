@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamageable
 {
     private const float GROUNDED_RAY_LENGTH = 0.8f;
     [SerializeField]
@@ -22,6 +22,8 @@ public class Player : MonoBehaviour
     [SerializeField] bool _isJumping = false;
 
     [SerializeField] LayerMask _groundedMask;
+
+    public int Health { get; set; }
 
     private bool IsGrounded()
     {
@@ -57,7 +59,7 @@ public class Player : MonoBehaviour
     }
 
     private WaitForSeconds waitForJumpDelay = new WaitForSeconds(0.1f);
-    
+
     private IEnumerator SetJumping()
     {
         // We want a brief delay so that we don't register as jumping until we're actually off the ground
@@ -109,5 +111,10 @@ public class Player : MonoBehaviour
 
         _rb.velocity = new Vector2(horizontal * _movementSpeed, _rb.velocity.y);
         _playerAnimation.SetMoveSpeed(Mathf.Abs(horizontal));
+    }
+
+    public void Damage(int damage)
+    {
+        Debug.Log($"Player Damaged for {damage}");
     }
 }
