@@ -17,14 +17,14 @@ public class Enemy : MonoBehaviour
     [SerializeField] float _wayPointThreshold = 0.05f;
     [SerializeField] protected float _sightDistance = 2f;
 
+    [SerializeField] protected bool _isDead = false;
+
     protected Player _player;
 
     public bool CombatMode { 
         get { return _animator ? _animator.GetBool("Combat Mode") : false; } 
         set { _animator?.SetBool("Combat Mode", value);  } 
     }
-
-    bool _isDead = false;
 
     private void Start()
     {

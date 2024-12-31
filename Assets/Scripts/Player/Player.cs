@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour, IDamageable
@@ -22,6 +23,10 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] bool _isJumping = false;
 
     [SerializeField] LayerMask _groundedMask;
+
+    [SerializeField] int _initialHealth = 5;
+
+    [SerializeField] private bool _isDead = false;
 
     public int Health { get; set; }
 
@@ -47,6 +52,8 @@ public class Player : MonoBehaviour, IDamageable
         SetComponentIfNull<BoxCollider2D>(ref _collider, "Box Collider 2D");
         SetComponentIfNull<PlayerAnimation>(ref _playerAnimation, "Player Animation script");
         SetComponentIfNull<SpriteRenderer>(ref _playerSpriteRenderer, "Sprite Renderer");
+
+        Health = _initialHealth;
     }
 
     private void SetComponentIfNull<T>(ref T field, string fieldName)
@@ -59,6 +66,7 @@ public class Player : MonoBehaviour, IDamageable
     }
 
     private WaitForSeconds waitForJumpDelay = new WaitForSeconds(0.1f);
+    
 
     private IEnumerator SetJumping()
     {
@@ -69,6 +77,10 @@ public class Player : MonoBehaviour, IDamageable
 
     private void Update()
     {
+        if (_isDead) return;
+
+        if (_playerAnimation.BeingHit()) return;
+
         bool isGrounded = IsGrounded();
         // Detect jump
         if (Input.GetKeyDown(KeyCode.Space))
@@ -113,8 +125,24 @@ public class Player : MonoBehaviour, IDamageable
         _playerAnimation.SetMoveSpeed(Mathf.Abs(horizontal));
     }
 
+    public bool IsDead()
+    {
+        return _isDead;
+    }
+
     public void Damage(int damage)
     {
-        Debug.Log($"Player Damaged for {damage}");
+        if (_isDead)
+        {
+            return;
+        }
+        _playerAnimation.SetHit();
+        Health -= damage;
+        Debug.Log($"Player Damaged for {damage}. Health is {Health}");
+        if (Health <= 0)
+        {
+            _playerAnimation.SetDeath();
+            _isDead = true;
+        }
     }
 }

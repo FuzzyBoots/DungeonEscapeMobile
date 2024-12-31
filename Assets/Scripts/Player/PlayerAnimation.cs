@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Animations;
@@ -31,5 +32,20 @@ public class PlayerAnimation : MonoBehaviour
             _playerAnimator.SetTrigger("Attack");
             _slashAnimator.SetTrigger("Slash");
         }
+    }
+
+    public void SetDeath()
+    {
+        _playerAnimator.SetTrigger("Death");
+    }
+
+    public bool BeingHit()
+    {
+        return _playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Player Hit");
+    }
+
+    internal void SetHit()
+    {
+        _playerAnimator.SetTrigger("Hit");
     }
 }

@@ -20,6 +20,7 @@ public class GreenGiant : Enemy, IDamageable
         if (_isDamageable && Health > 0)
         {
             PlayHit();
+            _isDamageable = false;
             CombatMode = true;
             Health -= damage;
             Debug.Log($"Health is {Health}");
