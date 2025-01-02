@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -27,6 +28,8 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] int _initialHealth = 5;
 
     [SerializeField] private bool _isDead = false;
+
+    [SerializeField] private int _diamonds;
 
     public int Health { get; set; }
 
@@ -67,7 +70,6 @@ public class Player : MonoBehaviour, IDamageable
 
     private WaitForSeconds waitForJumpDelay = new WaitForSeconds(0.1f);
     
-
     private IEnumerator SetJumping()
     {
         // We want a brief delay so that we don't register as jumping until we're actually off the ground
@@ -144,5 +146,12 @@ public class Player : MonoBehaviour, IDamageable
             _playerAnimation.SetDeath();
             _isDead = true;
         }
+    }
+
+    public void addDiamonds(int diamondValue)
+    {
+        _diamonds += diamondValue;
+
+        // Update the UI. If I had a UI.
     }
 }

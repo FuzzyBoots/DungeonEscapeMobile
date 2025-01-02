@@ -36,6 +36,7 @@ public class GreenGiant : Enemy, IDamageable
 
     protected override void HandleUpdate()
     {
+        if (_isDead) return;
         base.HandleUpdate();
 
         // Find direction to player

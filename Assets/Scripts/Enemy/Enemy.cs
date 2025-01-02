@@ -20,6 +20,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected bool _isDead = false;
 
     protected Player _player;
+    [SerializeField] Diamond _diamond;
 
     public bool CombatMode { 
         get { return _animator ? _animator.GetBool("Combat Mode") : false; } 
@@ -108,6 +109,8 @@ public class Enemy : MonoBehaviour
     public void PlayDeath()
     {
         _animator.SetTrigger("Death");
+        Diamond diamond = Instantiate(_diamond, transform.position, Quaternion.identity);
+        diamond.SetValue(_gems);
         _isDead = true;
     }
 }
