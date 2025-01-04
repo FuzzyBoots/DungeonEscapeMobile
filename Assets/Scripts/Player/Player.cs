@@ -32,6 +32,7 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] private int _diamonds;
 
     public int Health { get; set; }
+    public int Diamonds { get { return _diamonds; }}
 
     private bool IsGrounded()
     {
