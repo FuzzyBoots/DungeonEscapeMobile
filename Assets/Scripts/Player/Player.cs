@@ -34,6 +34,10 @@ public class Player : MonoBehaviour, IDamageable
     public int Health { get; set; }
     public int Diamonds { get { return _diamonds; }}
 
+    public bool FlamingSwordActive { get; set; }
+    public bool FlyingBootsActive { get; set; }
+    public bool CastleKeyActive { get; set; }
+
     private bool IsGrounded()
     {
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, GROUNDED_RAY_LENGTH, 
@@ -149,9 +153,16 @@ public class Player : MonoBehaviour, IDamageable
         }
     }
 
-    public void addDiamonds(int diamondValue)
+    public void AddDiamonds(int diamondValue)
     {
         _diamonds += diamondValue;
+
+        // Update the UI. If I had a UI.
+    }
+
+    public void RemoveDiamonds(int diamondValue)
+    {
+        _diamonds -= diamondValue;
 
         // Update the UI. If I had a UI.
     }

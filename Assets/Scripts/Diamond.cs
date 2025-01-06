@@ -34,7 +34,7 @@ public class Diamond : MonoBehaviour
 
         if (collision.TryGetComponent<Player>(out Player player))
         {
-            player.addDiamonds(_diamondValue);
+            player.AddDiamonds(_diamondValue);
             Destroy(gameObject);
         }
     }
