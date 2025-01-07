@@ -309,7 +309,7 @@ MonoBehaviour:
   _wayPointThreshold: 0.05
   _sightDistance: 4
   _isDead: 0
-  _diamond: {fileID: 9213834429559337169, guid: 0c65e95f0a000a747a122c35ab0bab1d, type: 3}
+  _diamond: {fileID: 1996832657593082164, guid: 0d6f199736fd3c94cb7ecbb17d2c5001, type: 3}
 --- !u!61 &6664039999749350392
 BoxCollider2D:
   m_ObjectHideFlags: 0

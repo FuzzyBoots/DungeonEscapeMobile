@@ -58,7 +58,7 @@ MonoBehaviour:
   _wayPointThreshold: 0.05
   _sightDistance: 5
   _isDead: 0
-  _diamond: {fileID: 9213834429559337169, guid: 0c65e95f0a000a747a122c35ab0bab1d, type: 3}
+  _diamond: {fileID: 1996832657593082164, guid: 0d6f199736fd3c94cb7ecbb17d2c5001, type: 3}
   _orb: {fileID: 8039708320975136336, guid: eb718b4c693f67842848809fca624ead, type: 3}
 --- !u!61 &5172422318141863458
 BoxCollider2D:
