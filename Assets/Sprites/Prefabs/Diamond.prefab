@@ -120,7 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a36f55db34f91af4ebf121d3f6a0898a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _diamondValue: 1
+  _diamondValue: 5
 --- !u!58 &7784043389271521600
 CircleCollider2D:
   m_ObjectHideFlags: 0

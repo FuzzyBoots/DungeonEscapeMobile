@@ -1,12 +1,11 @@
 //Example comes from https://bitbucket.org/catlikecodingunitytutorials/basics-02-building-a-graph/src/master/
 
-using System.Collections;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
 namespace FastScriptReload.Examples
 {
-	public class Graph : MonoBehaviour {
+    public class Graph : MonoBehaviour {
 
 		[SerializeField]
 		Transform pointPrefab;

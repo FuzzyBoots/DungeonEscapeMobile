@@ -1,6 +1,4 @@
-﻿using System;
-
-public interface IDamageable
+﻿public interface IDamageable
 {
     int Health { get; set; }
     

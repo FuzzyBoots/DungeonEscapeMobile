@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour, IDamageable
@@ -31,12 +29,16 @@ public class Player : MonoBehaviour, IDamageable
 
     [SerializeField] private int _diamonds;
 
-    public int Health { get; set; }
+    [SerializeField] private int _health;
+
+    public int Health { get { return _health; } set { _health = value; } }
     public int Diamonds { get { return _diamonds; }}
 
     public bool FlamingSwordActive { get; set; }
     public bool FlyingBootsActive { get; set; }
     public bool CastleKeyActive { get; set; }
+
+    DungeonEscapeControls _controls;
 
     private bool IsGrounded()
     {
@@ -62,6 +64,32 @@ public class Player : MonoBehaviour, IDamageable
         SetComponentIfNull<SpriteRenderer>(ref _playerSpriteRenderer, "Sprite Renderer");
 
         Health = _initialHealth;
+        HUD_UI_Manager.Instance.SetLife(Health);
+        HUD_UI_Manager.Instance.SetGemCount(Diamonds);
+
+        _controls = new DungeonEscapeControls();
+        _controls.DungeonEscape.Enable();
+
+        _controls.DungeonEscape.Attack.performed += Attack_performed;
+        _controls.DungeonEscape.Jump.performed += Jump_performed;
+    }
+
+    private void Jump_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        if (IsGrounded())
+        {
+            _playerAnimation.SetJumping(true);
+            StartCoroutine(SetJumping());
+            _rb.velocity = new Vector2(_rb.velocity.x, _jumpVelocity);
+        }
+    }
+
+    private void Attack_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        if (IsGrounded())
+        {
+            _playerAnimation.SetAttack();
+        }
     }
 
     private void SetComponentIfNull<T>(ref T field, string fieldName)
@@ -74,13 +102,14 @@ public class Player : MonoBehaviour, IDamageable
     }
 
     private WaitForSeconds waitForJumpDelay = new WaitForSeconds(0.1f);
-    
+
     private IEnumerator SetJumping()
     {
         // We want a brief delay so that we don't register as jumping until we're actually off the ground
         yield return waitForJumpDelay;
         _isJumping = true;
     }
+
 
     private void Update()
     {
@@ -89,33 +118,19 @@ public class Player : MonoBehaviour, IDamageable
         if (_playerAnimation.BeingHit()) return;
 
         bool isGrounded = IsGrounded();
-        // Detect jump
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (isGrounded)
-            {
-                _playerAnimation.SetJumping(true);
-                StartCoroutine(SetJumping());
-                _rb.velocity = new Vector2(_rb.velocity.x, _jumpVelocity);
-            }
-        }
-
+        
         if (_isJumping && isGrounded)
         {
             _isJumping = false;
             _playerAnimation.SetJumping(false);
-        }
-
-        if (Input.GetMouseButtonDown(0) && isGrounded)
-        {
-            _playerAnimation.SetAttack();
-        }
+        }        
     }
+
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        float horizontal = Input.GetAxis("Horizontal");
+        float horizontal = _controls.DungeonEscape.Move.ReadValue<Vector2>().x;
         if (horizontal > 0.01f)
         {
             Vector3 scale = transform.localScale;
@@ -145,6 +160,7 @@ public class Player : MonoBehaviour, IDamageable
         }
         _playerAnimation.SetHit();
         Health -= damage;
+        HUD_UI_Manager.Instance.SetLife(Health);
         Debug.Log($"Player Damaged for {damage}. Health is {Health}");
         if (Health <= 0)
         {
@@ -157,13 +173,13 @@ public class Player : MonoBehaviour, IDamageable
     {
         _diamonds += diamondValue;
 
-        // Update the UI. If I had a UI.
+        HUD_UI_Manager.Instance.SetGemCount(_diamonds);
     }
 
     public void RemoveDiamonds(int diamondValue)
     {
         _diamonds -= diamondValue;
 
-        // Update the UI. If I had a UI.
+        HUD_UI_Manager.Instance.SetGemCount(_diamonds);
     }
 }
