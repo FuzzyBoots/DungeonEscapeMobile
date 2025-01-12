@@ -1,13 +1,18 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Advertisements;
+using System;
 
 public class RewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowListener
 {
     [SerializeField] Button _showAdButton;
     [SerializeField] string _androidAdUnitId = "Rewarded_Android";
     [SerializeField] string _iOSAdUnitId = "Rewarded_iOS";
+
+    [SerializeField] int _diamondReward = 100;
     string _adUnitId = null; // This will remain null for unsupported platforms
+
+    public static event Action<int> OnAdReward;
 
     void Awake()
     {
@@ -49,6 +54,7 @@ public class RewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
     // Implement a method to execute when the user clicks the button:
     public void ShowAd()
     {
+        Debug.Log("Showing ad");
         // Disable the button:
         _showAdButton.interactable = false;
         // Then show the ad:
@@ -62,9 +68,9 @@ public class RewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
         {
             Debug.Log("Unity Ads Rewarded Ad Completed");
             // Grant a reward.
+            OnAdReward.Invoke(_diamondReward);
 
-            // Eventually, this may involve a delay
-            LoadAd();
+            _showAdButton.interactable = true;
         }
     }
 

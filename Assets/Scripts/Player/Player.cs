@@ -92,6 +92,16 @@ public class Player : MonoBehaviour, IDamageable
         }
     }
 
+    private void OnEnable()
+    {
+        RewardedAdsButton.OnAdReward += (award) => AddDiamonds(award);
+    }
+
+    private void OnDisable()
+    {
+        RewardedAdsButton.OnAdReward -= (award) => AddDiamonds(award);
+    }
+
     private void SetComponentIfNull<T>(ref T field, string fieldName)
     {
         if (field == null)
@@ -171,6 +181,7 @@ public class Player : MonoBehaviour, IDamageable
 
     public void AddDiamonds(int diamondValue)
     {
+        Debug.Log($"Adding {diamondValue} to the gold");
         _diamonds += diamondValue;
 
         HUD_UI_Manager.Instance.SetGemCount(_diamonds);
