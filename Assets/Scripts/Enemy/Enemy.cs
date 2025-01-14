@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class Enemy : MonoBehaviour
 {
@@ -21,6 +22,13 @@ public class Enemy : MonoBehaviour
     protected Player _player;
     [SerializeField] Diamond _diamond;
 
+    [SerializeField] AudioClip _attackSound;
+    [SerializeField] AudioClip _deathSound;
+    [SerializeField] AudioClip _footstepSound;
+    [SerializeField] AudioClip _hitSound;
+
+    AudioSource _audioSource;
+
     public bool CombatMode { 
         get { return _animator ? _animator.GetBool("Combat Mode") : false; } 
         set { _animator?.SetBool("Combat Mode", value);  } 
@@ -36,6 +44,9 @@ public class Enemy : MonoBehaviour
         {
             Debug.LogError("Animator could not be determined.", this);
         }
+
+        _audioSource = GetComponent<AudioSource>();
+        Assert.IsNotNull(_audioSource, "No audio source found on enemy " + gameObject.name);
 
         _player = GameObject.Find("Player")?.GetComponent<Player>();
     }
@@ -103,11 +114,13 @@ public class Enemy : MonoBehaviour
     public void PlayHit()
     {
         _animator.SetTrigger("Hit");
+        _audioSource.PlayOneShot(_hitSound);
     }
 
     public void PlayDeath()
     {
         _animator.SetTrigger("Death");
+        _audioSource.PlayOneShot(_deathSound);
         Diamond diamond = Instantiate(_diamond, transform.position, Quaternion.identity);
         diamond.SetValue(_gems);
         _isDead = true;

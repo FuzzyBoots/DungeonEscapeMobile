@@ -5,6 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    AudioSource _audioSource;
+    [SerializeField] AudioClip _menuSelectClip;
+
+    private void Start()
+    {
+        _audioSource = GetComponent<AudioSource>();
+    }
     public void StartGame()
     {
         SceneManager.LoadScene(1);
@@ -13,5 +20,10 @@ public class MainMenu : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void PlayMenuSelect()
+    {
+        _audioSource.PlayOneShot(_menuSelectClip);
     }
 }

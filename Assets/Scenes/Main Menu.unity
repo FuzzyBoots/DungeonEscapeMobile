@@ -958,6 +958,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f597ed59a43052408a7033fc0da34e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _menuSelectClip: {fileID: 8300000, guid: 24cb67fc3ce0b4435a73b79d1df47a2f, type: 3}
 --- !u!82 &1783871778
 AudioSource:
   m_ObjectHideFlags: 0
